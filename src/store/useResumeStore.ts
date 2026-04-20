@@ -59,6 +59,14 @@ interface ResumeStore {
   // Job description matcher
   jobDescription: string
   setJobDescription: (jd: string) => void
+
+  // Theme (light/dark for the APP UI — not the resume preview)
+  theme: 'light' | 'dark'
+  toggleTheme: () => void
+
+  // Per-template accent color (only Modern Tech & Creative Pro use it)
+  templateAccents: Partial<Record<TemplateId, string>>
+  setTemplateAccent: (id: TemplateId, color: string) => void
 }
 
 export const useResumeStore = create<ResumeStore>()(
@@ -189,10 +197,22 @@ export const useResumeStore = create<ResumeStore>()(
 
       jobDescription: '',
       setJobDescription: (jd) => set({ jobDescription: jd }),
+
+      theme: 'light',
+      toggleTheme: () => set((s) => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
+
+      templateAccents: {},
+      setTemplateAccent: (id, color) =>
+        set((s) => ({ templateAccents: { ...s.templateAccents, [id]: color } })),
     }),
     {
       name: 'ai-resume-builder-v1',
-      partialize: (state) => ({ resumeData: state.resumeData, activeTemplate: state.activeTemplate }),
+      partialize: (state) => ({
+        resumeData: state.resumeData,
+        activeTemplate: state.activeTemplate,
+        theme: state.theme,
+        templateAccents: state.templateAccents,
+      }),
     }
   )
 )

@@ -16,11 +16,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const remove = useResumeStore((s) => s.removeProject)
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div className="step-card">
       <div className="flex items-center gap-3 p-4">
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-slate-800 truncate">{project.name || 'New Project'}</p>
-          <p className="text-xs text-slate-400 truncate">{project.technologies.slice(0, 3).join(', ') || 'No technologies added'}</p>
+          <p className="font-medium text-slate-800 dark:text-slate-100 truncate">{project.name || 'New Project'}</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500 truncate">{project.technologies.slice(0, 3).join(', ') || 'No technologies added'}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <RemoveButton onClick={() => remove(project.id)} label="" />
@@ -31,18 +31,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {expanded && (
-        <div className="space-y-4 border-t border-slate-100 p-4">
+        <div className="space-y-4 border-t step-card-divider p-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Project Name</label>
+            <label className="mb-1 block field-label-sm">Project Name</label>
             <input className={inputClass} placeholder="OpenSearch Accelerator" value={project.name} onChange={(e) => update(project.id, { name: e.target.value })} />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Brief Description</label>
+            <label className="mb-1 block field-label-sm">Brief Description</label>
             <input className={inputClass} placeholder="Open-source query optimization library for Elasticsearch" value={project.description} onChange={(e) => update(project.id, { description: e.target.value })} />
           </div>
           <div>
-            <label className="mb-2 block text-xs font-medium text-slate-600">Key Highlights</label>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <label className="mb-2 block field-label-sm">Key Highlights</label>
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3">
               <RichTextArea
                 bullets={project.bullets}
                 onChange={(bullets) => update(project.id, { bullets })}
@@ -51,16 +51,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Technologies</label>
+            <label className="mb-1 block field-label-sm">Technologies</label>
             <TagInput tags={project.technologies} onChange={(technologies) => update(project.id, { technologies })} placeholder="Go, Redis, PostgreSQL..." />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">GitHub / Repo URL</label>
+              <label className="mb-1 block field-label-sm">GitHub / Repo URL</label>
               <input className={inputClass} placeholder="github.com/you/project" value={project.repoUrl} onChange={(e) => update(project.id, { repoUrl: e.target.value })} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Live URL (optional)</label>
+              <label className="mb-1 block field-label-sm">Live URL (optional)</label>
               <input className={inputClass} placeholder="yourproject.com" value={project.liveUrl} onChange={(e) => update(project.id, { liveUrl: e.target.value })} />
             </div>
           </div>

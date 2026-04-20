@@ -27,7 +27,7 @@ export function FormWizard() {
   return (
     <div className="flex h-full flex-col">
       {/* Step tabs */}
-      <div className="flex border-b border-slate-100 bg-white px-4 pt-4">
+      <div className="flex border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-4">
         {STEPS.map((step) => {
           const Icon = step.icon
           const active = step.id === currentStep
@@ -37,7 +37,11 @@ export function FormWizard() {
               key={step.id}
               onClick={() => goToStep(step.id)}
               className={`flex flex-1 flex-col items-center gap-1 pb-3 text-xs font-medium transition-colors border-b-2 ${
-                active ? 'border-brand-500 text-brand-600' : done ? 'border-transparent text-slate-400' : 'border-transparent text-slate-300'
+                active
+                  ? 'border-brand-500 text-brand-600 dark:text-brand-400'
+                  : done
+                    ? 'border-transparent text-slate-400 dark:text-slate-500'
+                    : 'border-transparent text-slate-300 dark:text-slate-600'
               }`}
             >
               <Icon size={16} />
@@ -48,20 +52,20 @@ export function FormWizard() {
       </div>
 
       {/* Step content */}
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto p-5 bg-slate-50 dark:bg-slate-900">
         <ActiveStep />
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between border-t border-slate-100 bg-white px-5 py-3">
+      <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3">
         <button
           onClick={prevStep}
           disabled={currentStep === 0}
-          className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-30"
+          className="rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30"
         >
           ← Previous
         </button>
-        <span className="text-xs text-slate-400">{currentStep + 1} / {STEPS.length}</span>
+        <span className="text-xs text-slate-400 dark:text-slate-500">{currentStep + 1} / {STEPS.length}</span>
         <button
           onClick={nextStep}
           disabled={currentStep === STEPS.length - 1}

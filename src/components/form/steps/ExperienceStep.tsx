@@ -20,7 +20,7 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
 
   return (
     <div
-      className={`rounded-xl border bg-white shadow-sm transition-colors ${dragOver ? 'border-brand-500 bg-brand-50' : 'border-slate-200'}`}
+      className={`step-card transition-colors ${dragOver ? '!border-brand-500 !bg-brand-50 dark:!bg-brand-500/10' : ''}`}
       onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
       onDragLeave={() => setDragOver(false)}
       onDrop={(e) => {
@@ -40,8 +40,8 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
           <GripVertical size={16} className="text-slate-300" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-slate-800 truncate">{role.title || 'New Position'}</p>
-          <p className="text-sm text-slate-500 truncate">{role.company || 'Company name'}</p>
+          <p className="font-medium text-slate-800 dark:text-slate-100 truncate">{role.title || 'New Position'}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{role.company || 'Company name'}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <RemoveButton onClick={() => remove(role.id)} label="" />
@@ -52,19 +52,19 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
       </div>
 
       {expanded && (
-        <div className="space-y-4 border-t border-slate-100 p-4">
+        <div className="space-y-4 border-t step-card-divider p-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Job Title</label>
+              <label className="mb-1 block field-label-sm">Job Title</label>
               <input className={inputClass} placeholder="Software Engineer" value={role.title} onChange={(e) => update(role.id, { title: e.target.value })} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Company</label>
+              <label className="mb-1 block field-label-sm">Company</label>
               <input className={inputClass} placeholder="Acme Corp" value={role.company} onChange={(e) => update(role.id, { company: e.target.value })} />
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Location</label>
+            <label className="mb-1 block field-label-sm">Location</label>
             <input className={inputClass} placeholder="San Francisco, CA" value={role.location} onChange={(e) => update(role.id, { location: e.target.value })} />
           </div>
           <DateRangePicker
@@ -76,8 +76,8 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
             onCurrentChange={(v) => update(role.id, { current: v, endDate: v ? '' : role.endDate })}
           />
           <div>
-            <label className="mb-2 block text-xs font-medium text-slate-600">Achievements & Responsibilities</label>
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+            <label className="mb-2 block field-label-sm">Achievements & Responsibilities</label>
+            <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3">
               <RichTextArea
                 bullets={role.bullets}
                 onChange={(bullets) => update(role.id, { bullets })}
@@ -86,7 +86,7 @@ function ExperienceCard({ role, index }: { role: Role; index: number }) {
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Technologies Used</label>
+            <label className="mb-1 block field-label-sm">Technologies Used</label>
             <TagInput tags={role.technologies} onChange={(technologies) => update(role.id, { technologies })} placeholder="React, TypeScript, AWS..." />
           </div>
         </div>

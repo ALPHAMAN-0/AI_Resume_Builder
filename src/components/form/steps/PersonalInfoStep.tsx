@@ -4,9 +4,9 @@ import { SectionHeader } from '@/components/shared/SectionHeader'
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-slate-700">{label}</label>
+      <label className="field-label">{label}</label>
       {children}
-      {hint && <p className="text-xs text-slate-400">{hint}</p>}
+      {hint && <p className="field-hint">{hint}</p>}
     </div>
   )
 }
@@ -62,7 +62,7 @@ export function PersonalInfoStep() {
             value={info.summary}
             onChange={handle('summary')}
           />
-          <div className="flex justify-between text-xs text-slate-400">
+          <div className="flex justify-between text-xs text-slate-400 dark:text-slate-500">
             <span>{info.summary.length} chars</span>
             <span className={info.summary.length >= 100 && info.summary.length <= 500 ? 'text-green-500' : 'text-amber-500'}>
               {info.summary.length < 100 ? `${100 - info.summary.length} more to reach minimum` : info.summary.length > 500 ? 'Consider shortening' : 'Good length'}

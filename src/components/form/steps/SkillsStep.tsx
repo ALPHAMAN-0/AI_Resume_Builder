@@ -55,7 +55,7 @@ export function SkillsStep() {
           const catSkills = skills.filter((s) => s.category === category)
           return (
             <div key={category}>
-              <h3 className="mb-2 text-sm font-semibold text-slate-700">{category}</h3>
+              <h3 className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">{category}</h3>
               <div className="flex flex-wrap gap-2 mb-2">
                 {catSkills.map((skill) => <SkillBadge key={skill.id} skill={skill} />)}
               </div>
@@ -65,7 +65,7 @@ export function SkillsStep() {
                   onChange={(e) => setInputs((prev) => ({ ...prev, [category]: e.target.value }))}
                   onKeyDown={(e) => e.key === 'Enter' && handleAdd(category)}
                   placeholder={`Add ${category.toLowerCase()} skill...`}
-                  className="flex-1 rounded-lg border border-dashed border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
+                  className="flex-1 rounded-lg border border-dashed border-slate-200 dark:border-slate-600 bg-transparent px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
                 />
                 <button
                   onClick={() => handleAdd(category)}

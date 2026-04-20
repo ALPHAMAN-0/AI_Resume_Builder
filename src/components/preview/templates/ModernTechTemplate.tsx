@@ -2,10 +2,18 @@ import type { ResumeData } from '@/types/resume'
 import { formatDateRange } from '@/lib/utils'
 import { Mail, Phone, MapPin, Linkedin, Github, Globe } from 'lucide-react'
 
-interface Props { data: ResumeData; isPrintMode?: boolean }
+interface Props { data: ResumeData; isPrintMode?: boolean; accent?: string }
 
-const ACCENT = '#4f46e5'
-const ACCENT_LIGHT = '#eef2ff'
+const DEFAULT_ACCENT = '#4f46e5'
+
+// Convert hex → rgba with alpha for a "light" tint
+function tint(hex: string, alpha = 0.08): string {
+  const h = hex.replace('#', '')
+  const r = parseInt(h.slice(0, 2), 16)
+  const g = parseInt(h.slice(2, 4), 16)
+  const b = parseInt(h.slice(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
 
 const grouped = (skills: ResumeData['skills']) => {
   const map: Record<string, ResumeData['skills']> = {}
@@ -20,9 +28,11 @@ const LEVEL_WIDTH: Record<string, string> = {
   beginner: '25%', intermediate: '55%', advanced: '80%', expert: '100%'
 }
 
-export function ModernTechTemplate({ data, isPrintMode }: Props) {
+export function ModernTechTemplate({ data, accent }: Props) {
   const { personalInfo: p, experience, projects, skills, education, certifications } = data
   const skillGroups = grouped(skills)
+  const ACCENT = accent || DEFAULT_ACCENT
+  const ACCENT_LIGHT = tint(ACCENT, 0.08)
 
   return (
     <div className="resume-page flex flex-col" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>

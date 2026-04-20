@@ -10,7 +10,50 @@
     font-family: 'Inter', system-ui, sans-serif;
   }
   body {
-    @apply bg-slate-50 text-slate-900;
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+  }
+
+  /* Dark mode styles for form inputs, textareas, selects */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    @apply bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-500;
+  }
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    @apply border-brand-500 ring-brand-500;
+  }
+  /* Month-picker calendar icon flip in dark mode */
+  .dark input[type="month"]::-webkit-calendar-picker-indicator,
+  .dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+  }
+}
+
+@layer components {
+  /* Form step cards — used by Experience/Project/Education/Certification cards */
+  .step-card {
+    @apply rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800;
+  }
+  .step-card-divider {
+    @apply border-slate-100 dark:border-slate-700;
+  }
+  /* Section headers in steps */
+  .section-title {
+    @apply text-xl font-semibold text-slate-800 dark:text-slate-100;
+  }
+  .section-desc {
+    @apply mt-1 text-sm text-slate-500 dark:text-slate-400;
+  }
+  .field-label {
+    @apply text-sm font-medium text-slate-700 dark:text-slate-300;
+  }
+  .field-label-sm {
+    @apply text-xs font-medium text-slate-600 dark:text-slate-400;
+  }
+  .field-hint {
+    @apply text-xs text-slate-400 dark:text-slate-500;
   }
 }
 
@@ -40,6 +83,6 @@
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { @apply bg-slate-100; }
-::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+::-webkit-scrollbar-track { @apply bg-slate-100 dark:bg-slate-900; }
+::-webkit-scrollbar-thumb { @apply bg-slate-300 dark:bg-slate-700 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-slate-400 dark:bg-slate-600; }

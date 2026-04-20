@@ -14,11 +14,11 @@ function CertCard({ cert, index }: { cert: Certification; index: number }) {
   const remove = useResumeStore((s) => s.removeCertification)
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div className="step-card">
       <div className="flex items-center gap-3 p-4">
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-slate-800 truncate">{cert.name || 'Certification Name'}</p>
-          <p className="text-sm text-slate-500 truncate">{cert.issuer || 'Issuing Organization'}</p>
+          <p className="font-medium text-slate-800 dark:text-slate-100 truncate">{cert.name || 'Certification Name'}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{cert.issuer || 'Issuing Organization'}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <RemoveButton onClick={() => remove(cert.id)} label="" />
@@ -29,31 +29,31 @@ function CertCard({ cert, index }: { cert: Certification; index: number }) {
       </div>
 
       {expanded && (
-        <div className="space-y-4 border-t border-slate-100 p-4">
+        <div className="space-y-4 border-t step-card-divider p-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Certification Name</label>
+            <label className="mb-1 block field-label-sm">Certification Name</label>
             <input className={inputClass} placeholder="AWS Solutions Architect Professional" value={cert.name} onChange={(e) => update(cert.id, { name: e.target.value })} />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Issuing Organization</label>
+            <label className="mb-1 block field-label-sm">Issuing Organization</label>
             <input className={inputClass} placeholder="Amazon Web Services" value={cert.issuer} onChange={(e) => update(cert.id, { issuer: e.target.value })} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Issue Date</label>
+              <label className="mb-1 block field-label-sm">Issue Date</label>
               <input type="month" className={inputClass} value={cert.issueDate} onChange={(e) => update(cert.id, { issueDate: e.target.value })} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Expiry Date (if any)</label>
+              <label className="mb-1 block field-label-sm">Expiry Date (if any)</label>
               <input type="month" className={inputClass} value={cert.expiryDate} onChange={(e) => update(cert.id, { expiryDate: e.target.value })} />
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Credential ID (optional)</label>
+            <label className="mb-1 block field-label-sm">Credential ID (optional)</label>
             <input className={inputClass} placeholder="AWS-SAP-12345" value={cert.credentialId} onChange={(e) => update(cert.id, { credentialId: e.target.value })} />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Verification URL (optional)</label>
+            <label className="mb-1 block field-label-sm">Verification URL (optional)</label>
             <input className={inputClass} placeholder="aws.amazon.com/verify" value={cert.url} onChange={(e) => update(cert.id, { url: e.target.value })} />
           </div>
         </div>

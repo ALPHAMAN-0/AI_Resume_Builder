@@ -11,12 +11,12 @@ export function ATSPanel() {
   const categories = Object.values(result.categories)
 
   return (
-    <div className="flex flex-col border-t border-slate-100 bg-white">
+    <div className="flex flex-col border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
       {/* Header */}
-      <button onClick={toggleAts} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50">
+      <button onClick={toggleAts} className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800">
         <div className="flex items-center gap-2">
           <TrendingUp size={15} className="text-brand-500" />
-          <span className="text-sm font-semibold text-slate-700">ATS Score</span>
+          <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">ATS Score</span>
           <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${result.grade === 'A' ? 'bg-green-100 text-green-700' : result.grade === 'B' ? 'bg-lime-100 text-lime-700' : result.grade === 'C' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
             {result.totalScore}/100
           </span>
@@ -32,7 +32,7 @@ export function ATSPanel() {
           </div>
 
           {/* Honesty disclaimer */}
-          <div className="flex gap-1.5 rounded-md bg-slate-50 px-2.5 py-2 text-[10px] leading-tight text-slate-500">
+          <div className="flex gap-1.5 rounded-md bg-slate-50 dark:bg-slate-800 px-2.5 py-2 text-[10px] leading-tight text-slate-500 dark:text-slate-400">
             <Info size={11} className="shrink-0 mt-0.5" />
             <span>Heuristic score — not a guarantee that every ATS will parse your resume. Real systems (Workday, Greenhouse, Lever) vary.</span>
           </div>
@@ -59,11 +59,11 @@ export function ATSPanel() {
                     {cat.passed
                       ? <CheckCircle2 size={11} className="text-green-500" />
                       : <AlertCircle size={11} className="text-amber-400" />}
-                    <span className="text-xs text-slate-600">{cat.name}</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-300">{cat.name}</span>
                   </div>
-                  <span className="text-xs font-medium text-slate-700">{cat.score}/{cat.maxScore}</span>
+                  <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{cat.score}/{cat.maxScore}</span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-100">
+                <div className="h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800">
                   <div
                     className="h-full rounded-full transition-all"
                     style={{

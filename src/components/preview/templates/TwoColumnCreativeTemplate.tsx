@@ -2,11 +2,10 @@ import type { ResumeData } from '@/types/resume'
 import { formatDateRange } from '@/lib/utils'
 import { Mail, Phone, MapPin, Linkedin, Github, Globe } from 'lucide-react'
 
-interface Props { data: ResumeData; isPrintMode?: boolean }
+interface Props { data: ResumeData; isPrintMode?: boolean; accent?: string }
 
-const SIDEBAR_BG = '#0d9488'
+const DEFAULT_ACCENT = '#0d9488'
 const SIDEBAR_TEXT = '#f0fdf9'
-const ACCENT = '#0d9488'
 
 const LEVEL_DOTS = { beginner: 1, intermediate: 2, advanced: 3, expert: 4 }
 
@@ -19,9 +18,11 @@ const grouped = (skills: ResumeData['skills']) => {
   return map
 }
 
-export function TwoColumnCreativeTemplate({ data }: Props) {
+export function TwoColumnCreativeTemplate({ data, accent }: Props) {
   const { personalInfo: p, experience, projects, skills, education, certifications } = data
   const skillGroups = grouped(skills)
+  const ACCENT = accent || DEFAULT_ACCENT
+  const SIDEBAR_BG = ACCENT
 
   return (
     <div className="resume-page flex" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
