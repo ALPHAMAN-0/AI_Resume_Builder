@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, TrendingUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, AlertCircle, CheckCircle2, TrendingUp, Info } from 'lucide-react'
 import { useATSScore } from '@/hooks/useATSScore'
 import { useResumeStore } from '@/store/useResumeStore'
 import { ScoreRing } from './ScoreRing'
@@ -29,6 +29,12 @@ export function ATSPanel() {
           {/* Score ring */}
           <div className="flex justify-center pt-2">
             <ScoreRing score={result.totalScore} grade={result.grade} />
+          </div>
+
+          {/* Honesty disclaimer */}
+          <div className="flex gap-1.5 rounded-md bg-slate-50 px-2.5 py-2 text-[10px] leading-tight text-slate-500">
+            <Info size={11} className="shrink-0 mt-0.5" />
+            <span>Heuristic score — not a guarantee that every ATS will parse your resume. Real systems (Workday, Greenhouse, Lever) vary.</span>
           </div>
 
           {/* Top suggestions */}

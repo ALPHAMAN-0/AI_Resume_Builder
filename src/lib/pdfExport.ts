@@ -1,14 +1,18 @@
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import type { ResumeData, TemplateId } from '@/types/resume'
+import { exportATSPdf } from './atsPdfExport'
 
 const PAGE_WIDTH_PX = 794
-const PAGE_HEIGHT_PX = 1123 // US Letter at 96dpi
 
-export async function exportToPDF(name: string): Promise<void> {
+async function exportVisualPdf(name: string): Promise<void> {
+  // Code-split: load heavy libs only on export click
+  const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+    import('html2canvas'),
+    import('jspdf'),
+  ])
+
   const printRoot = document.getElementById('resume-print-root')
   if (!printRoot) throw new Error('Print root not found')
 
-  // Make visible temporarily for rendering
   printRoot.style.visibility = 'visible'
   printRoot.style.position = 'fixed'
   printRoot.style.top = '0'
@@ -32,7 +36,6 @@ export async function exportToPDF(name: string): Promise<void> {
 
     const pageWidthMM = 215.9
     const pageHeightMM = 279.4
-
     const canvasHeightMM = (canvas.height / canvas.width) * pageWidthMM
     const totalPages = Math.ceil(canvasHeightMM / pageHeightMM)
 
@@ -52,4 +55,15 @@ export async function exportToPDF(name: string): Promise<void> {
     printRoot.style.left = '-9999px'
     printRoot.style.zIndex = ''
   }
+}
+
+export async function exportToPDF(name: string, template: TemplateId, data: ResumeData): Promise<void> {
+  // ATS Optimized template uses native text rendering — produces a real text-layer PDF
+  // that ATS systems (Workday, Greenhouse, Lever) can actually parse.
+  if (template === 'ats-minimal') {
+    await exportATSPdf(data)
+    return
+  }
+  // Other templates use html2canvas — visual fidelity wins over ATS parseability.
+  await exportVisualPdf(name)
 }

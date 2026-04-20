@@ -3,6 +3,7 @@ import { TopBar } from './TopBar'
 import { FormWizard } from '@/components/form/FormWizard'
 import { ResumePreview, PrintRoot } from '@/components/preview/ResumePreview'
 import { ATSPanel } from '@/components/ats/ATSPanel'
+import { JDMatcher } from '@/components/ats/JDMatcher'
 import { usePDFExport } from '@/hooks/usePDFExport'
 
 export function AppShell() {
@@ -35,13 +36,13 @@ export function AppShell() {
         </div>
 
         {/* ATS sidebar */}
-        <div className="flex w-[240px] shrink-0 flex-col overflow-y-auto border-l border-slate-200 bg-white">
+        <div className="flex w-[280px] shrink-0 flex-col overflow-y-auto border-l border-slate-200 bg-white">
           <div className="p-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">ATS Analyzer</h3>
-            <p className="mt-0.5 text-xs text-slate-500">Real-time resume scoring</p>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">Resume Intelligence</h3>
+            <p className="mt-0.5 text-xs text-slate-500">ATS score + JD match</p>
           </div>
-          <div className="flex-1" />
           <ATSPanel />
+          <JDMatcher />
         </div>
       </div>
 

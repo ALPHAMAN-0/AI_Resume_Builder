@@ -55,6 +55,10 @@ interface ResumeStore {
   setZoom: (zoom: number) => void
   setExporting: (val: boolean) => void
   toggleAts: () => void
+
+  // Job description matcher
+  jobDescription: string
+  setJobDescription: (jd: string) => void
 }
 
 export const useResumeStore = create<ResumeStore>()(
@@ -182,6 +186,9 @@ export const useResumeStore = create<ResumeStore>()(
       setZoom: (zoom) => set({ previewZoom: zoom }),
       setExporting: (val) => set({ isExporting: val }),
       toggleAts: () => set((s) => ({ atsExpanded: !s.atsExpanded })),
+
+      jobDescription: '',
+      setJobDescription: (jd) => set({ jobDescription: jd }),
     }),
     {
       name: 'ai-resume-builder-v1',

@@ -13,13 +13,32 @@ const inputClass = "w-full rounded-lg border border-slate-200 px-3 py-2.5 text-s
 
 function ExperienceCard({ role, index }: { role: Role; index: number }) {
   const [expanded, setExpanded] = useState(index === 0)
+  const [dragOver, setDragOver] = useState(false)
   const update = useResumeStore((s) => s.updateExperience)
   const remove = useResumeStore((s) => s.removeExperience)
+  const reorder = useResumeStore((s) => s.reorderExperience)
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div
+      className={`rounded-xl border bg-white shadow-sm transition-colors ${dragOver ? 'border-brand-500 bg-brand-50' : 'border-slate-200'}`}
+      onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault()
+        setDragOver(false)
+        const from = Number(e.dataTransfer.getData('text/plain'))
+        if (!Number.isNaN(from) && from !== index) reorder(from, index)
+      }}
+    >
       <div className="flex items-center gap-3 p-4">
-        <GripVertical size={16} className="text-slate-300 cursor-grab shrink-0" />
+        <div
+          draggable
+          onDragStart={(e) => { e.dataTransfer.setData('text/plain', String(index)); e.dataTransfer.effectAllowed = 'move' }}
+          title="Drag to reorder"
+          className="cursor-grab active:cursor-grabbing shrink-0 p-1 -m-1 hover:text-slate-500"
+        >
+          <GripVertical size={16} className="text-slate-300" />
+        </div>
         <div className="flex-1 min-w-0">
           <p className="font-medium text-slate-800 truncate">{role.title || 'New Position'}</p>
           <p className="text-sm text-slate-500 truncate">{role.company || 'Company name'}</p>
