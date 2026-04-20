@@ -11,6 +11,7 @@ export interface PersonalInfo {
   github: string
   portfolio: string
   summary: string
+  photo: string // base64 data URL, used by Elegant Cream template
 }
 
 export interface Role {
@@ -125,6 +126,7 @@ export const EMPTY_RESUME: ResumeData = {
     github: '',
     portfolio: '',
     summary: '',
+    photo: '',
   },
   experience: [],
   projects: [],

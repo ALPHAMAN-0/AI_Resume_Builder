@@ -42,10 +42,12 @@ export function ElegantCreamTemplate({ data, accent }: Props) {
         {/* Photo circle */}
         <div className="px-5 pt-10 pb-4 flex justify-center">
           <div
-            className="w-[170px] h-[170px] rounded-full flex items-center justify-center shrink-0"
+            className="w-[170px] h-[170px] rounded-full overflow-hidden flex items-center justify-center shrink-0"
             style={{ background: '#ffffff', border: `5px solid ${CREAM_EDGE}`, boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
           >
-            {initials ? (
+            {p.photo ? (
+              <img src={p.photo} alt={p.fullName} className="h-full w-full object-cover" />
+            ) : initials ? (
               <span className="text-[36pt] font-bold" style={{ color: NAVY }}>{initials}</span>
             ) : (
               <User size={64} style={{ color: CREAM_EDGE }} />

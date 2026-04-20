@@ -11,6 +11,7 @@ export const DEMO_RESUME: ResumeData = {
     github: 'github.com/alexchen',
     portfolio: 'alexchen.dev',
     summary: 'Senior Software Engineer with 6+ years of experience building scalable distributed systems and high-performance web applications. Led teams of 5–8 engineers at Series B startups and Fortune 500 companies. Passionate about developer experience, system reliability, and mentoring junior engineers.',
+    photo: '',
   },
   experience: [
     {
