@@ -4,6 +4,7 @@ import { ModernTechTemplate } from './templates/ModernTechTemplate'
 import { ClassicExecutiveTemplate } from './templates/ClassicExecutiveTemplate'
 import { TwoColumnCreativeTemplate } from './templates/TwoColumnCreativeTemplate'
 import { ATSMinimalTemplate } from './templates/ATSMinimalTemplate'
+import { ElegantCreamTemplate } from './templates/ElegantCreamTemplate'
 import { getAccentForTemplate } from '@/components/layout/AccentPicker'
 
 export interface TemplateProps { data: ResumeData; isPrintMode?: boolean; accent?: string }
@@ -12,6 +13,7 @@ const TEMPLATE_MAP: Record<TemplateId, React.ComponentType<TemplateProps>> = {
   'classic-executive': ClassicExecutiveTemplate,
   'two-column-creative': TwoColumnCreativeTemplate,
   'ats-minimal': ATSMinimalTemplate,
+  'elegant-cream': ElegantCreamTemplate,
 }
 
 export function ResumePreview() {

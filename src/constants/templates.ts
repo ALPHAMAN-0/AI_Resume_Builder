@@ -29,4 +29,11 @@ export const TEMPLATES: TemplateConfig[] = [
     accentColor: '#111827',
     bestFor: ['FAANG', 'Enterprise ATS', 'Government'],
   },
+  {
+    id: 'elegant-cream',
+    name: 'Elegant Cream',
+    description: 'Warm cream header, navy name, purple sections with photo circle',
+    accentColor: '#5d40cc',
+    bestFor: ['Marketing', 'Sales', 'Business roles', 'Non-tech professional'],
+  },
 ]

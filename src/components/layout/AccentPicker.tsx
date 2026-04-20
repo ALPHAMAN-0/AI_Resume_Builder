@@ -9,6 +9,7 @@ const DEFAULT_ACCENTS: Record<TemplateId, string> = {
   'classic-executive': '#1e3a5f',
   'two-column-creative': '#0d9488',
   'ats-minimal': '#111827',
+  'elegant-cream': '#5d40cc',
 }
 
 const PRESETS = [
@@ -40,8 +41,11 @@ export function AccentPicker() {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  // Only Modern Tech and Creative Pro support custom accent
-  const supported = activeTemplate === 'modern-tech' || activeTemplate === 'two-column-creative'
+  // Modern Tech, Creative Pro, and Elegant Cream support custom accent
+  const supported =
+    activeTemplate === 'modern-tech' ||
+    activeTemplate === 'two-column-creative' ||
+    activeTemplate === 'elegant-cream'
   const current = getAccentForTemplate(activeTemplate, accents)
 
   useEffect(() => {

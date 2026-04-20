@@ -1,5 +1,5 @@
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert'
-export type TemplateId = 'modern-tech' | 'classic-executive' | 'two-column-creative' | 'ats-minimal'
+export type TemplateId = 'modern-tech' | 'classic-executive' | 'two-column-creative' | 'ats-minimal' | 'elegant-cream'
 
 export interface PersonalInfo {
   fullName: string
