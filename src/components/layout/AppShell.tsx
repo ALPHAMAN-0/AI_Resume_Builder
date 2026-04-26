@@ -4,6 +4,7 @@ import { FormWizard } from '@/components/form/FormWizard'
 import { ResumePreview, PrintRoot } from '@/components/preview/ResumePreview'
 import { ATSPanel } from '@/components/ats/ATSPanel'
 import { JDMatcher } from '@/components/ats/JDMatcher'
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary'
 import { usePDFExport } from '@/hooks/usePDFExport'
 import { useResumeStore } from '@/store/useResumeStore'
 
@@ -36,7 +37,9 @@ export function AppShell() {
       <div className="flex flex-1 overflow-hidden">
         {/* Form panel */}
         <div className="flex w-[420px] shrink-0 flex-col overflow-hidden border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
-          <FormWizard />
+          <ErrorBoundary>
+            <FormWizard />
+          </ErrorBoundary>
         </div>
 
         {/* Preview panel — resume preview background stays neutral gray in both modes */}
