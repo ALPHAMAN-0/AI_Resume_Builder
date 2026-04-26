@@ -39,8 +39,8 @@ export function TopBar() {
     <header className="flex h-14 items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 shadow-sm">
       {/* Logo */}
       <div className="flex items-center gap-2 shrink-0">
-        <img src={logoUrl} alt="ResumeAI Pro" className="h-8 w-8 rounded-lg object-cover" />
-        <span className="text-sm font-bold text-slate-800 dark:text-slate-100">ResumeAI Pro</span>
+        <img src={logoUrl} alt="Resume Pro" className="h-8 w-8 rounded-lg object-cover" />
+        <span className="text-sm font-bold text-slate-800 dark:text-slate-100">Resume Pro</span>
       </div>
 
       <div className="mx-2 h-5 w-px bg-slate-200 dark:bg-slate-700" />
