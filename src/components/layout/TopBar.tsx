@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Download, Loader2, RotateCcw, Sparkles, FileJson, Upload, Moon, Sun } from 'lucide-react'
+import { Download, Loader2, RotateCcw, FileJson, Upload, Moon, Sun } from 'lucide-react'
 import { useResumeStore } from '@/store/useResumeStore'
 import { usePDFExport } from '@/hooks/usePDFExport'
 import { TEMPLATES } from '@/constants/templates'
@@ -7,6 +7,7 @@ import { DEMO_RESUME } from '@/constants/demoData'
 import { exportResumeJson, importResumeJson } from '@/lib/jsonPortability'
 import { AccentPicker, getAccentForTemplate } from './AccentPicker'
 import type { TemplateId } from '@/types/resume'
+import logoUrl from '../../../Logo/logo.png'
 
 export function TopBar() {
   const activeTemplate = useResumeStore((s) => s.activeTemplate)
@@ -38,9 +39,7 @@ export function TopBar() {
     <header className="flex h-14 items-center gap-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 shadow-sm">
       {/* Logo */}
       <div className="flex items-center gap-2 shrink-0">
-        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600">
-          <Sparkles size={14} className="text-white" />
-        </div>
+        <img src={logoUrl} alt="ResumeAI Pro" className="h-8 w-8 rounded-lg object-cover" />
         <span className="text-sm font-bold text-slate-800 dark:text-slate-100">ResumeAI Pro</span>
       </div>
 
