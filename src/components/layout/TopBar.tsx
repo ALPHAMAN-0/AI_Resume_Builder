@@ -7,7 +7,7 @@ import { DEMO_RESUME } from '@/constants/demoData'
 import { exportResumeJson, importResumeJson } from '@/lib/jsonPortability'
 import { AccentPicker, getAccentForTemplate } from './AccentPicker'
 import type { TemplateId } from '@/types/resume'
-import logoUrl from '../../../Logo/logo.png'
+import logoUrl from '@/assets/logo.png'
 
 export function TopBar() {
   const activeTemplate = useResumeStore((s) => s.activeTemplate)
