@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
 import { matchJobDescription } from '@/lib/jdMatcher'
-import { EMPTY_RESUME, type ResumeData } from '@/types/resume'
+import { EMPTY_RESUME } from '@/types/resume'
 
-const resume: ResumeData = {
+const resume = {
   ...EMPTY_RESUME,
   personalInfo: { ...EMPTY_RESUME.personalInfo, title: 'Frontend Developer', summary: 'Built machine learning dashboards' },
   skills: [
@@ -13,22 +14,22 @@ const resume: ResumeData = {
 
 describe('matchJobDescription', () => {
   it('returns an empty result for a blank job description', () => {
-    expect(matchJobDescription('  \n ', resume)).toEqual({ matchPercent: 0, matched: [], missing: [], topMissing: [] })
+    assert.deepEqual(matchJobDescription('  \n ', resume), { matchPercent: 0, matched: [], missing: [], topMissing: [] })
   })
 
   it('reports matched and missing keywords, ignoring filler words', () => {
     const result = matchJobDescription('We need React, TypeScript and Kubernetes experience.', resume)
 
-    expect(result.matched).toEqual(['react', 'typescript'])
-    expect(result.missing).toEqual(['need', 'kubernetes'])
-    expect(result.matchPercent).toBe(50)
+    assert.deepEqual(result.matched, ['react', 'typescript'])
+    assert.deepEqual(result.missing, ['need', 'kubernetes'])
+    assert.equal(result.matchPercent, 50)
   })
 
   it('treats multi-word tech phrases as a single keyword', () => {
     const result = matchJobDescription('Experience with machine learning and system design', resume)
 
-    expect(result.matched).toContain('machine learning')
-    expect(result.missing).toContain('system design')
+    assert.ok(result.matched.includes('machine learning'))
+    assert.ok(result.missing.includes('system design'))
   })
 
   it('handles terms with regex metacharacters and ranks missing keywords by frequency', () => {
@@ -36,9 +37,9 @@ describe('matchJobDescription', () => {
 
     const result = matchJobDescription(jd, EMPTY_RESUME)
 
-    expect(result.matchPercent).toBe(0)
-    expect(result.missing).toEqual(expect.arrayContaining(['c++', 'c#', 'node.js', 'ci cd', 'terraform']))
-    expect(result.topMissing[0]).toBe('kubernetes')
-    expect(result.topMissing.length).toBeLessThanOrEqual(10)
+    assert.equal(result.matchPercent, 0)
+    for (const term of ['c++', 'c#', 'node.js', 'ci cd', 'terraform']) assert.ok(result.missing.includes(term), term)
+    assert.equal(result.topMissing[0], 'kubernetes')
+    assert.ok(result.topMissing.length <= 10)
   })
 })
