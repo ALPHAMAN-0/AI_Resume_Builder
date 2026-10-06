@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { exportToPDF } from '@/lib/pdfExport'
 import { DEMO_RESUME } from '@/constants/demoData'
+import type { ResumeData } from '@/types/resume'
 
 interface SavedPdf {
   filename: string
@@ -66,6 +67,24 @@ describe('exportToPDF', () => {
       '(UC Berkeley) Tj',
     ]) {
       expect(pdf.content).toContain(text)
+    }
+  })
+
+  // Security: same Object.prototype collision as in the on-screen templates.
+  it('exports skills whose category collides with Object.prototype keys', async () => {
+    const data: ResumeData = {
+      ...DEMO_RESUME,
+      skills: [
+        { id: 'a', name: 'Alpha', level: 'expert', category: 'constructor' },
+        { id: 'b', name: 'Bravo', level: 'advanced', category: '__proto__' },
+      ],
+    }
+
+    await exportToPDF('Alex Chen', 'ats-minimal', data)
+
+    expect(saved).toHaveLength(1)
+    for (const text of ['(constructor: ) Tj', '(Alpha) Tj', '(__proto__: ) Tj', '(Bravo) Tj']) {
+      expect(saved[0].content).toContain(text)
     }
   })
 

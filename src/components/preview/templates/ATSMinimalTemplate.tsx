@@ -4,7 +4,8 @@ import { formatDateRange } from '@/lib/utils'
 interface Props { data: ResumeData; isPrintMode?: boolean }
 
 const grouped = (skills: ResumeData['skills']) => {
-  const map: Record<string, string[]> = {}
+  // No prototype, so a category named e.g. "constructor" can't resolve to an inherited member
+  const map: Record<string, string[]> = Object.create(null)
   for (const s of skills) {
     if (!map[s.category]) map[s.category] = []
     map[s.category].push(s.name)

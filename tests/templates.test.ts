@@ -21,6 +21,25 @@ const render = (Template: ComponentType<{ data: ResumeData }>, data: ResumeData)
   renderToStaticMarkup(createElement(Template, { data }))
 
 describe('resume templates', () => {
+  // Security: a category named after an Object.prototype member used to throw while
+  // grouping skills. The preview is rendered from persisted data, so one imported
+  // file left the app blank on every load.
+  it.each(TEMPLATES)('%s renders skills whose category collides with Object.prototype keys', (_name, Template) => {
+    const data: ResumeData = {
+      ...DEMO_RESUME,
+      skills: [
+        { id: 'a', name: 'Alpha', level: 'expert', category: 'constructor' },
+        { id: 'b', name: 'Bravo', level: 'advanced', category: '__proto__' },
+        { id: 'c', name: 'Charlie', level: 'beginner', category: 'toString' },
+        { id: 'd', name: 'Delta', level: 'intermediate', category: 'hasOwnProperty' },
+      ],
+    }
+
+    const html = render(Template, data)
+
+    for (const name of ['Alpha', 'Bravo', 'Charlie', 'Delta']) expect(html).toContain(name)
+  })
+
   it.each(TEMPLATES)('%s escapes markup in user-supplied text', (_name, Template) => {
     const data: ResumeData = {
       ...DEMO_RESUME,

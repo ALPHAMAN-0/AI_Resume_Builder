@@ -16,7 +16,8 @@ function tint(hex: string, alpha = 0.08): string {
 }
 
 const grouped = (skills: ResumeData['skills']) => {
-  const map: Record<string, ResumeData['skills']> = {}
+  // No prototype, so a category named e.g. "constructor" can't resolve to an inherited member
+  const map: Record<string, ResumeData['skills']> = Object.create(null)
   for (const s of skills) {
     if (!map[s.category]) map[s.category] = []
     map[s.category].push(s)

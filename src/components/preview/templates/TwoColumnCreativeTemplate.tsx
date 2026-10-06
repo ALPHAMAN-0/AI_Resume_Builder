@@ -10,7 +10,8 @@ const SIDEBAR_TEXT = '#f0fdf9'
 const LEVEL_DOTS = { beginner: 1, intermediate: 2, advanced: 3, expert: 4 }
 
 const grouped = (skills: ResumeData['skills']) => {
-  const map: Record<string, ResumeData['skills']> = {}
+  // No prototype, so a category named e.g. "constructor" can't resolve to an inherited member
+  const map: Record<string, ResumeData['skills']> = Object.create(null)
   for (const s of skills) {
     if (!map[s.category]) map[s.category] = []
     map[s.category].push(s)
