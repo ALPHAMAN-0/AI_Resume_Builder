@@ -31,6 +31,13 @@ function asString(v: unknown): string {
   return typeof v === 'string' ? v : ''
 }
 
+// The photo is rendered as <img src>. Accept only inline raster images (what the
+// photo uploader produces) so an imported file can't make the browser fetch a URL.
+const INLINE_IMAGE = /^data:image\/(?:png|jpe?g|gif|webp);base64,[a-z0-9+/]+=*$/i
+function asInlineImage(v: unknown): string {
+  return typeof v === 'string' && INLINE_IMAGE.test(v) ? v : ''
+}
+
 function asBool(v: unknown): boolean {
   return typeof v === 'boolean' ? v : false
 }
@@ -125,7 +132,7 @@ function sanitizePersonalInfo(raw: unknown): PersonalInfo {
   if (!isPlainObject(raw)) return base
   const keys = Object.keys(base) as Array<keyof PersonalInfo>
   for (const key of keys) {
-    if (key in raw) base[key] = asString(raw[key])
+    if (key in raw) base[key] = key === 'photo' ? asInlineImage(raw[key]) : asString(raw[key])
   }
   return base
 }
@@ -160,8 +167,15 @@ function sanitizeImportedResume(parsed: unknown): ResumeData {
   }
 }
 
+// A real export is well under 1MB, and browsers cap localStorage at roughly this size.
+const MAX_IMPORT_BYTES = 5 * 1024 * 1024
+
 export function importResumeJson(file: File): Promise<ResumeData> {
   return new Promise((resolve, reject) => {
+    if (file.size > MAX_IMPORT_BYTES) {
+      reject(new Error('File too large — must be under 5MB'))
+      return
+    }
     const reader = new FileReader()
     reader.onload = () => {
       try {

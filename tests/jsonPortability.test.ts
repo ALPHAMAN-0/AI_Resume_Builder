@@ -91,4 +91,50 @@ describe('importResumeJson', () => {
   it('rejects files that are not valid JSON', async () => {
     await expect(importResumeJson(jsonFile('{ "personalInfo": '))).rejects.toThrow('Invalid JSON file')
   })
+
+  // Security: the photo ends up in <img src>. Only inline raster images (what the
+  // photo uploader produces) may come in through an import — never a URL the
+  // browser would fetch.
+  it('keeps inline raster photos', async () => {
+    for (const photo of [INLINE_JPEG, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==']) {
+      const data = await importResumeJson(jsonFile({ personalInfo: { photo } }))
+      expect(data.personalInfo.photo).toBe(photo)
+    }
+  })
+
+  it('drops photo values that are not inline raster images', async () => {
+    const unsafePhotos = [
+      'https://tracker.example/pixel.gif?who=victim',
+      'http://192.168.0.1/admin/reboot',
+      '//tracker.example/pixel.gif',
+      'javascript:alert(1)',
+      'file:///etc/passwd',
+      'data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==',
+      'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=',
+      'data:image/png;base64,AAAA" onerror="alert(1)',
+      ' data:image/png;base64,AAAA',
+    ]
+
+    for (const photo of unsafePhotos) {
+      const data = await importResumeJson(jsonFile({ personalInfo: { fullName: 'Ada', photo } }))
+      expect(data.personalInfo.photo, photo).toBe('')
+      expect(data.personalInfo.fullName).toBe('Ada')
+    }
+  })
+
+  it('rejects oversized files without reading them', async () => {
+    const readAsText = vi.spyOn(FakeFileReader.prototype, 'readAsText')
+    const huge = jsonFile(`{"personalInfo":{"summary":"${'a'.repeat(5 * 1024 * 1024)}"}}`)
+
+    // Reduce the outcome to a short string so a failure does not print 5 MB of text.
+    const outcome = await importResumeJson(huge).then(
+      () => 'imported',
+      (err: Error) => err.message,
+    )
+
+    expect(outcome).toMatch(/too large/i)
+    expect(readAsText).not.toHaveBeenCalled()
+
+    readAsText.mockRestore()
+  })
 })
