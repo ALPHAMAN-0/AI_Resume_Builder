@@ -99,6 +99,9 @@ export const useResumeStore = create<ResumeStore>()(
       reorderExperience: (from, to) =>
         set((s) => {
           const arr = [...s.resumeData.experience]
+          // Indices come from drag-and-drop data; an out-of-range one would insert `undefined`
+          const inRange = (i: number) => Number.isInteger(i) && i >= 0 && i < arr.length
+          if (!inRange(from) || !inRange(to)) return s
           const [item] = arr.splice(from, 1)
           arr.splice(to, 0, item)
           return { resumeData: { ...s.resumeData, experience: arr } }

@@ -63,6 +63,19 @@ describe('useResumeStore', () => {
     expect(experienceTitles()).toEqual(['A', 'B', 'C'])
   })
 
+  // The indices come from drag-and-drop data, which any dragged text can supply.
+  // An out-of-range index used to insert `undefined` into the persisted list.
+  it('ignores reorder requests with out-of-range or non-integer indices', () => {
+    seedExperience('A', 'B', 'C')
+
+    for (const [from, to] of [[7, 0], [0, 7], [-1, 0], [0, -1], [NaN, 1], [1.5, 0]]) {
+      state().reorderExperience(from, to)
+
+      expect(state().resumeData.experience.every(Boolean), `${from} -> ${to}`).toBe(true)
+      expect(experienceTitles(), `${from} -> ${to}`).toEqual(['A', 'B', 'C'])
+    }
+  })
+
   it('keeps the wizard step within its six steps', () => {
     state().prevStep()
     expect(state().currentStep).toBe(0)
