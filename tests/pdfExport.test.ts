@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { exportToPDF } from '@/lib/pdfExport'
 import { DEMO_RESUME } from '@/constants/demoData'
 import type { ResumeData } from '@/types/resume'
@@ -32,6 +32,12 @@ vi.mock('html2canvas', () => ({ default: html2canvas }))
 // Smallest valid JPEG (1×1 px) — stands in for a rendered page slice.
 const TINY_JPEG =
   'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA='
+
+// jsPDF is a large bundle. Load it once here, with a generous limit, so a cold
+// cache or a busy machine cannot push the first export past the test timeout.
+beforeAll(async () => {
+  await import('jspdf')
+}, 120_000)
 
 beforeEach(() => {
   saved.length = 0
