@@ -31,8 +31,8 @@ function asString(v: unknown): string {
   return typeof v === 'string' ? v : ''
 }
 
-// The photo is rendered as <img src>. Accept only inline raster images (what the
-// photo uploader produces) so an imported file can't make the browser fetch a URL.
+// The photo is rendered as <img src>. Accept only base64 data-URL raster images (what
+// the photo uploader produces) so an imported file can't make the browser fetch a URL.
 const INLINE_IMAGE = /^data:image\/(?:png|jpe?g|gif|webp);base64,[a-z0-9+/]+=*$/i
 function asInlineImage(v: unknown): string {
   return typeof v === 'string' && INLINE_IMAGE.test(v) ? v : ''
