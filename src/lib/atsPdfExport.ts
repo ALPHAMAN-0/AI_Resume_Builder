@@ -110,7 +110,8 @@ export async function exportATSPdf(data: ResumeData): Promise<void> {
   // Skills — grouped by category
   if (skills.length > 0) {
     sectionHeader('Skills')
-    const grouped: Record<string, string[]> = {}
+    // No prototype, so a category named e.g. "constructor" can't resolve to an inherited member
+    const grouped: Record<string, string[]> = Object.create(null)
     for (const s of skills) {
       if (!grouped[s.category]) grouped[s.category] = []
       grouped[s.category].push(s.name)

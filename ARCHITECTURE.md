@@ -3,7 +3,7 @@ tags: [architecture, AI_Resume_Builder]
 ---
 
 ## 1. Stack
-- React 18 + TypeScript, bundled with Vite 5 (package.json)
+- React 18 + TypeScript, bundled with Vite 6 (package.json)
 - Tailwind CSS v3 (`darkMode: 'class'` per README), PostCSS
 - State: Zustand v4 + `persist` middleware → localStorage (package.json; README)
 - UI primitives: Radix UI (select, slider, progress, tooltip, tabs, separator, label), Lucide icons (package.json)

@@ -154,6 +154,10 @@ npm run preview
 
 Output lands in `dist/`.
 
+### Run tests
+
+`npm test` runs the unit tests in `tests/` with Node's built-in test runner (Node 20.6+, no extra dependencies).
+
 ---
 
 ## Deploy to GitHub Pages
@@ -197,7 +201,7 @@ Documented in the honest review — see [the plan file](../.claude/plans/i-want-
 
 - **ATS score is a heuristic.** Real ATS systems (Workday, Greenhouse, Lever, Taleo) all parse differently. The score is useful directional feedback, not a pass/fail guarantee.
 - **Visual templates (Modern/Classic/Creative) produce image-based PDFs** via html2canvas. Only the **ATS Optimized** template produces a true text-layer PDF. If you need guaranteed ATS parseability, use that template.
-- **No tests yet.** The scorer is a pure function and easily testable — Vitest setup is a welcome contribution.
+- **Tests cover the logic, not the UI.** The suite exercises the scorer, JD matcher, JSON import, store, templates and PDF export; the form components have no tests yet.
 - **Publications / Open-Source / Patents sections** aren't supported yet (relevant for research / ML / staff+ roles).
 
 ---
@@ -205,7 +209,7 @@ Documented in the honest review — see [the plan file](../.claude/plans/i-want-
 ## Contributing
 
 Open an issue before any major work. Quick wins welcome:
-- Vitest setup + tests for the ATS scorer
+- Tests for the form components
 - More role-specific keyword banks
 - Additional templates
 - Accessibility improvements (ARIA, keyboard nav)
