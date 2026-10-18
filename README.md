@@ -2,6 +2,18 @@
 
 A professional resume builder for high-tech job seekers. Build a recruiter-ready resume, score it against ATS systems, match it to job descriptions, and export to PDF — all in the browser, no backend, no account required.
 
+## Architecture / How it Works
+
+```mermaid
+flowchart LR
+    A[User] --> B[Ai Resume Builder]
+    B --> C{Logic}
+    C --> D[(Data)]
+    C --> E[Output]
+    D --> C
+```
+
+
 Live: `https://alphaman-0.github.io/AI_Resume_Builder/` (after GitHub Pages is enabled)
 
 ---
