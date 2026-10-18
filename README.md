@@ -5,12 +5,20 @@ A professional resume builder for high-tech job seekers. Build a recruiter-ready
 ## Architecture / How it Works
 
 ```mermaid
-flowchart LR
-    A[User] --> B[Ai Resume Builder]
-    B --> C{Logic}
-    C --> D[(Data)]
-    C --> E[Output]
-    D --> C
+flowchart TD
+    AppShell --> FormWizard
+    AppShell --> ResumePreview
+    AppShell --> ATSPanel
+    AppShell --> PDFExport
+    AppShell --> jsonPortability
+    FormWizard --> useResumeStore
+    ResumePreview --> useResumeStore
+    ATSPanel --> useResumeStore
+    ATSPanel --> atsScorer
+    ATSPanel --> jdMatcher
+    PDFExport --> useResumeStore
+    jsonPortability --> useResumeStore
+    atsScorer --> Constants
 ```
 
 
